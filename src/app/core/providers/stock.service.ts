@@ -1,7 +1,11 @@
+import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import {
+  ForkJoinData,
+  ForkJoinDetails,
   Stock,
+  StockInsiderSentiment,
   StockName,
 } from '../../shared/models/stock.model';
 import { LocalStorageService } from './local-storage.service';
@@ -11,21 +15,20 @@ import { StockDataService } from './stock-data.service';
   providedIn: 'root',
 })
 export class StockService {
+
   stocks$: BehaviorSubject<Stock[]> = new BehaviorSubject([]);
-  hasLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  symbol$: Subject<string> = new Subject();
 
   constructor(
     private localStorageService: LocalStorageService,
     private stockDataService: StockDataService
   ) {
-    this.localStorageService.getItem('symbol').forEach((symbol) => {
-      this.getCurrentStocks(symbol);
-    });
+    
   }
 
   addSymbol(symbol: string) {
     this.localStorageService.addItem('symbol', symbol);
-    this.getCurrentStocks(symbol);
+    this.symbol$.next(symbol);
   }
 
   removeSymbol(symbol: string) {
@@ -36,31 +39,53 @@ export class StockService {
     this.stocks$.next(tmpStocks);
   }
 
-  getCurrentStocks(symbol: string) {
-    this.hasLoaded$.next(false);
-    forkJoin({
+  getCurrentStocks(symbol: string): Observable<ForkJoinData> {
+    return forkJoin({
       resultOne: this.stockDataService.getCompanyName(symbol),
       resultTwo: this.stockDataService.getData(symbol),
-    }).subscribe((value) => {
-      let tmpStockName: StockName = value.resultOne.result.find(
-        (item) => item.symbol === symbol
-      );
-      let stock: Stock = {
-        symbol: symbol,
-        description: tmpStockName?.description,
-        displaySymbol: tmpStockName?.displaySymbol,
-        type: tmpStockName?.type,
-        c: value.resultTwo.c,
-        d: value.resultTwo.d,
-        dp: value.resultTwo.dp,
-        h: value.resultTwo.h,
-        l: value.resultTwo.l,
-        o: value.resultTwo.o,
-        pc: value.resultTwo.pc,
-        t: value.resultTwo.t,
-      };
-      this.stocks$.next([...this.stocks$.getValue(), stock]);
-      this.hasLoaded$.next(true);
     });
+  }
+
+  getCurrentStockDetails(
+    fromDate: string,
+    toDate: string,
+    symbol: string
+  ): Observable<ForkJoinDetails> {
+    return forkJoin({
+      resultOne: this.stockDataService.getCompanyName(symbol),
+      resultTwo: this.stockDataService.getInsiderSentiment(
+        symbol,
+        fromDate,
+        toDate
+      ),
+    });
+  }
+
+  parsingCurrentStockDetails(
+    stock: Stock,
+    symbol: string,
+    nbMonth: number
+  ): Array<StockInsiderSentiment> {
+    let monthList: Array<StockInsiderSentiment> = [];
+    let tmpDate = new Date(
+      new Date().setMonth(new Date().getMonth() - nbMonth)
+    );
+    for (let i = 0; i < nbMonth; i++) {
+      let currentMonth: number = tmpDate.getMonth() + 1;
+      let currentYear: number = tmpDate.getFullYear();
+      let currentDate: StockInsiderSentiment = stock.data.find(
+        (item) => item.month === currentMonth && item.year === currentYear
+      );
+      monthList[i] = {
+        symbol: symbol,
+        month: currentMonth,
+        year: currentYear,
+        change: currentDate?.change,
+        mspr: currentDate?.mspr,
+        name: formatDate(tmpDate, 'MMMM', 'en'),
+      };
+      tmpDate = new Date(tmpDate.setMonth(tmpDate.getMonth() + 1));
+    }
+    return monthList;
   }
 }

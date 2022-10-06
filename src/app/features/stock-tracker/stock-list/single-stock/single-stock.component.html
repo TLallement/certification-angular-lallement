@@ -16,7 +16,7 @@
       <div class="card-text row">
         <div class="col">
           <b>Change today :</b>
-          <p>{{ stock.dp | number : '1.0-2' }}%</p>
+          <p>{{ stock.dp | number : '1.0-2' | positive }}%</p>
           <p></p>
         </div>
         <div class="col">

@@ -13,6 +13,8 @@ import { SingleStockComponent } from './features/stock-tracker/stock-list/single
 import { StockTrackerComponent } from './features/stock-tracker/stock-tracker.component';
 import { StockSentimentComponent } from './features/stock-sentiment/stock-sentiment.component';
 import { SentimentDatePipe } from './shared/pipes/sentiment-date.pipe';
+import { StockService } from './core/providers/stock.service';
+import { PositivePipe } from './shared/pipes/positive.pipe';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { SentimentDatePipe } from './shared/pipes/sentiment-date.pipe';
     StockSentimentComponent,
     StockTrackerComponent,
     SentimentDatePipe,
+    PositivePipe,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -20,7 +20,7 @@ const months: string[] = [
   name: 'sentimentDate',
 })
 export class SentimentDatePipe implements PipeTransform {
-  transform(value: StockInsiderSentiment): unknown {
+  transform(value: StockInsiderSentiment): string {
     return months[value.month-1] + ' ' + value.year;
   }
 }

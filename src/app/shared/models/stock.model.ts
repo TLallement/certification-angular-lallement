@@ -62,10 +62,20 @@ export interface StockInsiderSentiment {
   month: number;
   change: number;
   mspr: number;
-  name?: string
+  name?: string;
 }
 
 export interface StockCallInsiderSentiment {
   symbol: string;
   data: StockInsiderSentiment[];
+}
+
+export interface ForkJoinData {
+  resultOne: StockCallName;
+  resultTwo: StockCallData;
+}
+
+export interface ForkJoinDetails {
+  resultOne: StockCallName;
+  resultTwo: StockCallInsiderSentiment;
 }
