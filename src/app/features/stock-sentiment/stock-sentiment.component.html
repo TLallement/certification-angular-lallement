@@ -1,46 +1,47 @@
 <ng-container *ngIf="stock$ | async as stock; else loading">
-<div class="card  mb-1">
-  <div class="card-body pt-3">
-    <h3 class="card-title">{{ stock.description }}</h3>
-    <h4 class="card-subtitle text-muted pb-2">{{ stock.symbol }}</h4>
-    <div class="row">
-      <div class="col">
-        <div class="card-text row">
-          <div
-            *ngFor="let n of monthsSequence(); let i = index"
-            class="col-4"
-          >
-            <h5>Month 1</h5>
-            <div class="row">
-              <div class="col">
-                <b>Change</b>
-                {{ stock.data[i].change }}
+  <div class="card mb-1">
+    <div class="card-body pt-3">
+      <h3 class="card-title">{{ stock.description }}</h3>
+      <h4 class="card-subtitle text-muted pb-2">{{ stock.symbol }}</h4>
+      <div class="row">
+        <div class="col">
+          <div class="card-text row">
+            <div
+              *ngFor="let month of months"
+              class="col-4"
+            >
+              <h5>{{ month | sentimentDate }}</h5>
+              <div *ngIf="month.change !== undefined; else elseBlock" class="row">
+                <div class="col">
+                  <b>Change</b>
+                  {{ month.change }}
+                </div>
+                <div class="col">
+                  <b>MSPR</b>
+                  {{ month.mspr }}
+                </div>
+                <div class="col">
+                  <i
+                    [ngClass]="
+                      month.change >= 0
+                        ? 'bi-arrow-up-right text-success'
+                        : 'bi-arrow-down-right text-danger'
+                    "
+                    class="bi fs-1"
+                  ></i>
+                </div>
               </div>
-              <div class="col">
-                <b>MSPR</b>
-                {{ stock.data[i].mspr }}
-              </div>
-              <div class="col">
-                <i
-                  [ngClass]="
-                    stock.data[i].change >= 0
-                      ? 'bi-arrow-up-right text-success'
-                      : 'bi-arrow-down-right text-danger'
-                  "
-                  class="bi fs-1"
-                ></i>
-              </div>
+              <ng-template #elseBlock>No data available.</ng-template>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </ng-container>
 <ng-template #loading>
-<div class="alert alert-info m-1 mb-1" role="alert">
-  Hang tight, we're loading...
-</div>
+  <div class="alert alert-info m-1 mb-1" role="alert">
+    Hang tight, we're loading...
+  </div>
 </ng-template>
 <button routerLink="" class="btn btn-info">Back to list of stocks</button>

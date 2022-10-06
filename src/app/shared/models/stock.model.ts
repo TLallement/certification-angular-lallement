@@ -62,6 +62,7 @@ export interface StockInsiderSentiment {
   month: number;
   change: number;
   mspr: number;
+  name?: string
 }
 
 export interface StockCallInsiderSentiment {

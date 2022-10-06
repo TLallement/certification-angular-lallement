@@ -12,6 +12,7 @@ import { StockFormComponent } from './features/stock-tracker/stock-form/stock-fo
 import { SingleStockComponent } from './features/stock-tracker/stock-list/single-stock/single-stock.component';
 import { StockTrackerComponent } from './features/stock-tracker/stock-tracker.component';
 import { StockSentimentComponent } from './features/stock-sentiment/stock-sentiment.component';
+import { SentimentDatePipe } from './shared/pipes/sentiment-date.pipe';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { StockSentimentComponent } from './features/stock-sentiment/stock-sentim
     SingleStockComponent,
     StockSentimentComponent,
     StockTrackerComponent,
+    SentimentDatePipe,
   ],
   providers: [],
   bootstrap: [AppComponent],
