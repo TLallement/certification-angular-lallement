@@ -10,9 +10,7 @@ import {
 const PATH: string = 'https://finnhub.io/api/v1/';
 const TOKEN: string = '&token=bu4f8kn48v6uehqi3cqg';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StockDataService {
   constructor(private readonly httpClient: HttpClient) {}
 

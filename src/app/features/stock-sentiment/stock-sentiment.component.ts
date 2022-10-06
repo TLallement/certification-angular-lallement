@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { formatDate } from '@angular/common';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import {
   Stock,
   StockInsiderSentiment,
   StockName,
 } from '../../shared/models/stock.model';
-import { StockDataService } from '../../core/providers/stock-data.service';
 import { StockService } from '../../core/providers/stock.service';
 
 const NB_MONTHS: number = 3;
@@ -58,9 +57,11 @@ export class StockSentimentComponent implements OnInit {
         };
         this.stock$.next(stock);
         this.hasLoaded = true;
-        this.months = this.stockService.parsingCurrentStockDetails(stock, this.symbol, NB_MONTHS);
+        this.months = this.stockService.parsingCurrentStockDetails(
+          stock,
+          this.symbol,
+          NB_MONTHS
+        );
       });
   }
-
-
 }

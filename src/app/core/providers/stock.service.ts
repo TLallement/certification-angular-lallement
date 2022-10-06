@@ -6,25 +6,19 @@ import {
   ForkJoinDetails,
   Stock,
   StockInsiderSentiment,
-  StockName,
 } from '../../shared/models/stock.model';
 import { LocalStorageService } from './local-storage.service';
 import { StockDataService } from './stock-data.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StockService {
-
   stocks$: BehaviorSubject<Stock[]> = new BehaviorSubject([]);
   symbol$: Subject<string> = new Subject();
 
   constructor(
     private localStorageService: LocalStorageService,
     private stockDataService: StockDataService
-  ) {
-    
-  }
+  ) {}
 
   addSymbol(symbol: string) {
     this.localStorageService.addItem('symbol', symbol);

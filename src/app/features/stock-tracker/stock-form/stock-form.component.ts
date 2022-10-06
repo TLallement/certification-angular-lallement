@@ -22,7 +22,8 @@ export class StockFormComponent implements OnInit {
   }
 
   onSave(): void {
-    if (!this.stockForm.invalid) 
+    if (!this.stockForm.invalid) {
       this.stockService.addSymbol(this.stockForm.value.symbol.toUpperCase());
+    }
   }
 }

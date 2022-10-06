@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LocalStorageService } from '../../../core/providers/local-storage.service';
-import { StockDataService } from '../../../core/providers/stock-data.service';
 import { StockService } from '../../../core/providers/stock.service';
 import { Stock, StockName } from '../../../shared/models/stock.model';
 

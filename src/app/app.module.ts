@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { StockListComponent } from './features/stock-tracker/stock-list/stock-list.component';
 import { StockFormComponent } from './features/stock-tracker/stock-form/stock-form.component';
@@ -15,12 +13,12 @@ import { StockSentimentComponent } from './features/stock-sentiment/stock-sentim
 import { SentimentDatePipe } from './shared/pipes/sentiment-date.pipe';
 import { StockService } from './core/providers/stock.service';
 import { PositivePipe } from './shared/pipes/positive.pipe';
+import { LocalStorageService } from './core/providers/local-storage.service';
+import { StockDataService } from './core/providers/stock-data.service';
 
 @NgModule({
   imports: [
-    SharedModule,
     BrowserModule,
-    CoreModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -36,7 +34,7 @@ import { PositivePipe } from './shared/pipes/positive.pipe';
     SentimentDatePipe,
     PositivePipe,
   ],
-  providers: [],
+  providers: [LocalStorageService, StockDataService, StockService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -40,8 +40,10 @@
   </div>
 </ng-container>
 <ng-template #loading>
-  <div class="alert alert-info m-1 mb-1" role="alert">
-    Hang tight, we're loading...
+<div class="d-flex justify-content-center pt-5">
+  <div class="spinner-border text-info" style="width: 10rem; height: 10rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
   </div>
+</div>
 </ng-template>
 <button [attr.id]="'backBtn'" routerLink="" class="btn btn-info">Back to list of stocks</button>
