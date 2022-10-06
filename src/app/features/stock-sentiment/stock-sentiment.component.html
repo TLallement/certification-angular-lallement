@@ -14,11 +14,11 @@
               <div *ngIf="month.change !== undefined; else elseBlock" class="row">
                 <div class="col">
                   <b>Change</b>
-                  {{ month.change | positive }}
+                  <p>{{ month.change | positive }}</p>
                 </div>
                 <div class="col">
                   <b>MSPR</b>
-                  {{ month.mspr }}
+                  <p>{{ month.mspr }}</p>
                 </div>
                 <div class="col">
                   <i

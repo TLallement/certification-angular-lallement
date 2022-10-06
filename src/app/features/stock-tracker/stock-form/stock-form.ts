@@ -27,7 +27,7 @@ export class StockForm extends FormGroup<StockFormGroup> {
 
 export function localStorageValidator(localStorageService: LocalStorageService): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
-    const forbidden = localStorageService.getItem('symbol').indexOf(control.value) > -1
+    const forbidden = localStorageService.getItem('symbol').indexOf(control.value?.toUpperCase()) > -1
     return forbidden ? {forbiddenName: {value: control.value}} : null;
   };
 }
