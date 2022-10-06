@@ -87,7 +87,6 @@ export class StockSentimentComponent implements OnInit {
       };
       tmpDate = new Date(tmpDate.setMonth(tmpDate.getMonth() + 1));
     }
-    console.log(monthList);
     return monthList;
   }
 }
