@@ -1,6 +1,6 @@
 <div class="col-12">
   <p>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</p>
-  <form (ngSubmit)="onSave()" [formGroup]="stockForm">
+  <form (ngSubmit)="onSave()" novalidate [formGroup]="stockForm">
     <section>
       <input
         [attr.id]="'stockInput'"

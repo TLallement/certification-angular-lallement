@@ -33,8 +33,8 @@ export class StockSentimentComponent implements OnInit {
 
   ngOnInit() {
     this.symbol = this.route.snapshot.paramMap.get('symbol');
-    this.startDate.setMonth(this.startDate.getMonth() - NB_MONTHS);
-    this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+    this.startDate.setMonth(this.startDate.getMonth() - NB_MONTHS + 1);
+    this.currentDate.setMonth(this.currentDate.getMonth());
     this.getCurrentStockDetails(
       formatDate(this.startDate, 'yyyy-MM-dd', 'en'),
       formatDate(this.currentDate, 'yyyy-MM-dd', 'en')

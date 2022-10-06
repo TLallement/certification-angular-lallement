@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { LocalStorageService } from '../../../core/providers/local-storage.service';
 import { StockService } from '../../../core/providers/stock.service';
 import { StockForm, StockFormGroup } from './stock-form';
 
@@ -11,13 +12,17 @@ import { StockForm, StockFormGroup } from './stock-form';
 export class StockFormComponent implements OnInit {
   stockForm: FormGroup<StockFormGroup>;
 
-  constructor(private stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.stockForm = new StockForm();
+    this.stockForm = new StockForm(this.localStorageService);
   }
 
   onSave(): void {
-    this.stockService.addSymbol(this.stockForm.value.symbol);
+    if (!this.stockForm.invalid) 
+      this.stockService.addSymbol(this.stockForm.value.symbol);
   }
 }

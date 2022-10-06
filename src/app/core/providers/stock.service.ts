@@ -68,7 +68,7 @@ export class StockService {
   ): Array<StockInsiderSentiment> {
     let monthList: Array<StockInsiderSentiment> = [];
     let tmpDate = new Date(
-      new Date().setMonth(new Date().getMonth() - nbMonth)
+      new Date().setMonth(new Date().getMonth() - nbMonth + 1)
     );
     for (let i = 0; i < nbMonth; i++) {
       let currentMonth: number = tmpDate.getMonth() + 1;

@@ -14,20 +14,20 @@ export interface StockFormGroup {
 }
 
 export class StockForm extends FormGroup<StockFormGroup> {
-  constructor() {
+  constructor(localStorageService: LocalStorageService) {
     super({
       symbol: new FormControl(null, [
         Validators.required,
         Validators.maxLength(5),
-        localStorageValidator(),
+        localStorageValidator(localStorageService)
       ]),
     });
   }
 }
 
-
-export function localStorageValidator(): ValidatorFn {  
-    return (control: AbstractControl): { [key: string]: any } | null =>  
-        control.value  === 'GOOGL' 
-            ? null : {wrongColor: control.value};
+export function localStorageValidator(localStorageService: LocalStorageService): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const forbidden = localStorageService.getItem('symbol').indexOf(control.value) > -1
+    return forbidden ? {forbiddenName: {value: control.value}} : null;
+  };
 }
