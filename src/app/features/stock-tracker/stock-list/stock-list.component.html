@@ -1,0 +1,15 @@
+<div *ngIf="stockService.stocks$ | async as stocks" class="row">
+<ng-container *ngIf="stockService.hasLoaded$ | async; else loading">
+  <app-single-stock
+    *ngFor="let stock of stocks"
+    [stock]="stock"
+    class="col-6"
+    style="padding-top:2rem"
+  ></app-single-stock>
+</ng-container>
+</div>
+<ng-template #loading>
+<div class="alert alert-info m-1" role="alert">
+  Hang tight, we're loading...
+</div>
+</ng-template>

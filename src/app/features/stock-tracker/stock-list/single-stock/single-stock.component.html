@@ -1,0 +1,54 @@
+<div class="card">
+<div class="card-body pt-3">
+  <div class="d-flex justify-content-between">
+    <h3 class="card-title">{{ stock.description }}</h3>
+    <button
+      [attr.id]="'remove' + stock.symbol"
+      (click)="onRemove()"
+      class="btn btn-danger col-1"
+    >
+      X
+    </button>
+  </div>
+  <h4 class="card-subtitle text-muted pb-2">{{ stock.symbol }}</h4>
+  <div class="row">
+    <div class="col-8">
+      <div class="card-text row">
+        <div class="col">
+          <b>Change today :</b>
+          <p>{{ stock.dp | number : '1.0-2' }}%</p>
+          <p></p>
+        </div>
+        <div class="col">
+          <b>Opening price :</b>
+          <p>{{ stock.o | currency: 'USD' }}</p>
+        </div>
+      </div>
+      <div class="card-text row">
+        <div class="col">
+          <b>Current price :</b>
+          <p>{{ stock.c | currency: 'USD' }}</p>
+        </div>
+        <div class="col">
+          <b>High price :</b>
+          <p>{{ stock.h | currency: 'USD' }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="row"></div>
+      <i
+        [ngClass]="
+          stock.dp >= 0
+            ? 'bi-arrow-up-right text-success'
+            : 'bi-arrow-down-right text-danger'
+        "
+        class="bi fs-1"
+      ></i>
+      <button routerLink="/sentiment/{{ stock.symbol }}" class="btn btn-info">
+        Go to sentiment details
+      </button>
+    </div>
+  </div>
+</div>
+</div>
